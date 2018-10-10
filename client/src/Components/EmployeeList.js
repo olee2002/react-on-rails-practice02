@@ -13,7 +13,8 @@ export default class EmployeeList extends Component {
         isEdited: false,
         employee: {},
         children: [],
-        gotKids: false
+        gotKids: false,
+        id: ''
     }
 
     componentDidMount = () => {
@@ -35,14 +36,19 @@ export default class EmployeeList extends Component {
 
     handleChildren = (id) => {
         axios.get(`/api/employees/${id}/children`)
-            .then(res => this.setState({ children: res.data, gotKids: true }))
+            .then(res => this.setState({ children: res.data, id, gotKids: true }))
     }
     handleKids = () => {
         this.setState({ gotKids: !this.state.gotKids })
     }
+    handleDeleteChild = (id) => {
+        axios.delete(`/api/employees/${this.state.id}/children/${id}`)
+            .then(res => this.setState({ children: res.data }))
+
+    }
 
     render() {
-        const { employees, employee, children, isNew, isEdited, gotKids } = this.state
+        const { employees, employee, id, children, isNew, isEdited, gotKids } = this.state
         return (
             <div className='container'>
                 <div>
@@ -63,7 +69,7 @@ export default class EmployeeList extends Component {
                             <td>{e.age}</td>
                             <td>{e.email}</td>
                             <td>
-                                <button className='btn btn-default ml-2' onClick={() => this.handleChildren(e.id)}>Show Kids</button>
+                                <button className='btn btn-primary ml-2' onClick={() => this.handleChildren(e.id)}>Show Kids</button>
                                 <button className='btn btn-primary ml-2' onClick={() => this.handleEdit(e)}>Edit</button>
                                 <button className='btn btn-danger ml-2' onClick={() => this.handleDelete(e.id)}>Delete</button>
                             </td>
@@ -73,8 +79,9 @@ export default class EmployeeList extends Component {
                 <button className='btn btn-primary' onClick={this.handleForm}>Create New Employees</button>
 
                 {isNew || isEdited ? <EmployeeForm isEdited={isEdited} employee={employee} /> : null}
-                {gotKids ? <div><Children children={children} />
-                    <button className='btn btn-primary mt-2' onClick={this.handleKids}>Close Children List</button></div>
+                {gotKids ? <div><Children children={children} id={id} employee={employee} handleDelete={this.handleDeleteChild} />
+                    <button className='btn btn-primary mt-2' onClick={this.handleKids}>Close Children List</button>
+                </div>
                     : null}
 
             </div>
