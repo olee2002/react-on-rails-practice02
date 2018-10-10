@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20181010174100) do
 
   create_table "employees", force: :cascade do |t|
     t.string "name"
-    t.string "postion"
+    t.string "position"
     t.integer "age"
     t.string "email"
     t.datetime "created_at", null: false
