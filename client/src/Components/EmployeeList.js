@@ -23,6 +23,10 @@ export default class EmployeeList extends Component {
                         <div>Position:{e.position}</div>
                         <div>Age:{e.age}</div>
                         <div>Email:{e.email}</div>
+                        <button className='btn btn-primary'>Create</button>
+                        <button className='btn btn-primary m-2'>Edit</button>
+                        <button className='btn btn-danger'>Delete</button>
+                        <hr />
                     </div>)
                 }
             </div>
