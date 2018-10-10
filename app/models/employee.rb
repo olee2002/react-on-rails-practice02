@@ -1,3 +1,3 @@
 class Employee < ApplicationRecord
-has_many :children   
+has_many :children,   dependent: :destroy
 end

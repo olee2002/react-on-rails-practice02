@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+Child.delete_all
 Employee.delete_all
 
 john = Employee.create(
@@ -13,4 +13,26 @@ john = Employee.create(
     email: 'jdoe@test.com',
     age: 40,
     position:'CEO'
+)
+
+
+joan = Employee.create(
+    name:'joan Smith',
+    email: 'jdoe@test.com',
+    age: 40,
+    position:'CMO'
+)
+
+amma = john.children.create(
+    name:'amma Doe',
+    age: 9
+)
+tommy = john.children.create(
+    name:'tommy Doe',
+    age: 7
+)
+
+buggy = joan.children.create(
+    name:'buggy Smith',
+    age: 5
 )
